@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_CASE(openDataTest)
   MatrixXd output = matrixIO::openData("../data/temp.csv", 3);
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
-      BOOST_TEST(m(i, j) == m(i, j));
+      BOOST_TEST(m(i, j) == output(i, j));
     }
   }
 }
