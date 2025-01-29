@@ -1,3 +1,5 @@
+[![Boost Test](https://github.com/M-Jafarkhani/testing-boost-exercise/actions/workflows/boost_test.yml/badge.svg)](https://github.com/M-Jafarkhani/testing-boost-exercise/actions/workflows/boost_test.yml)
+
 # SIDEMADE - Simple Dense Matrix Decomposition
 
 A simple demo code to read dense matrices from files and solve linear systems with them.
