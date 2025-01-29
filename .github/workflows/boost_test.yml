@@ -1,0 +1,36 @@
+name: Boost Test
+on: [push]
+
+jobs:
+  style_check:
+    runs-on: ubuntu:24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Install clang-format"
+        run: sudo apt update && sudo apt install clang-format
+      - name: "Run clang-format for style check"
+        run: clang-format src/*.cpp src/*.hpp tests/*.cpp --dry-run -Werror
+  build:
+    runs-on: ubuntu:24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Install necessary dependencies"
+        run: sudo apt update && sudo apt-get install cmake libyaml-cpp-dev libeigen3-dev libboost-test-dev
+      - name: "Run CMake"
+        run: mkdir build && cd build && cmake ..
+      - name: "Make"
+        run: cd build && make
+
+  test:
+    runs-on: ubuntu:24.04
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Install dependencies"
+        run: sudo apt update && sudo apt-get install cmake libyaml-cpp-dev libeigen3-dev libboost-test-dev
+      - name: "Run CMake"
+        run: mkdir build && cd build && cmake ..
+      - name: "Make"
+        run: cd build && make
+      - name: "Test"
+        run: cd build && make test
