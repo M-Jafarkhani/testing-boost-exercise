@@ -31,25 +31,25 @@ using namespace Eigen;
 struct MatrixIOFixture {
   MatrixIOFixture()
   {
-    test = MatrixXd(3, 3);
-    test << 1, 1, 0,
-        3, 1, 0,
-        0, 2, 1;
+    expectedX = MatrixXd(3, 3);
+    expectedX << 1, 2, 3,
+        4, 5, 6,
+        7, 8, 9;
   }
 
-  MatrixXd test;
+  MatrixXd expectedX;
 };
 
 BOOST_FIXTURE_TEST_SUITE(MatrixIOTests, MatrixIOFixture)
 
 BOOST_AUTO_TEST_CASE(openDataTest)
 {
-  matrixIO::saveData("../data/temp.csv", test);
+  matrixIO::saveData("../data/temp.csv", expectedX);
 
   MatrixXd output = matrixIO::openData("../data/temp.csv", 3);
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
-      BOOST_TEST(test(i, j) == output(i, j));
+      BOOST_TEST(expectedX(i, j) == output(i, j));
     }
   }
 }
