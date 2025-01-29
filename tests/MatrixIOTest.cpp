@@ -19,7 +19,7 @@ BOOST_FIXTURE_TEST_SUITE(MatrixIOTests, MatrixIOFixture)
 
 BOOST_AUTO_TEST_CASE(openDataTest)
 {
-  matrixIO::saveData("../data/temp.csv", test);
+  matrixIO::saveData("../data/temp.csv", m);
 
   MatrixXd output = matrixIO::openData("../data/temp.csv", 3);
   for (int i = 0; i < 3; i++) {
