@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   style_check:
-    runs-on: ubuntu:24.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: "Install clang-format"
@@ -11,23 +11,23 @@ jobs:
       - name: "Run clang-format for style check"
         run: clang-format src/*.cpp src/*.hpp tests/*.cpp --dry-run -Werror
   build:
-    runs-on: ubuntu:24.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: "Install necessary dependencies"
-        run: sudo apt update && sudo apt-get install cmake libyaml-cpp-dev libeigen3-dev libboost-test-dev
+      - name: "Install Dependencies"
+        run: sudo apt update && sudo apt-get install cmake libeigen3-dev libyaml-cpp-dev  libboost-test-dev
       - name: "Run CMake"
         run: mkdir build && cd build && cmake ..
       - name: "Make"
         run: cd build && make
 
   test:
-    runs-on: ubuntu:24.04
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - uses: actions/checkout@v4
       - name: "Install dependencies"
-        run: sudo apt update && sudo apt-get install cmake libyaml-cpp-dev libeigen3-dev libboost-test-dev
+        run: sudo apt update && sudo apt-get install cmake libeigen3-dev libyaml-cpp-dev  libboost-test-dev
       - name: "Run CMake"
         run: mkdir build && cd build && cmake ..
       - name: "Make"
