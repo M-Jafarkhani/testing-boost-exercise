@@ -1,36 +1,77 @@
 name: Boost Test
-on: [push]
+
+on: 
+  - push
 
 jobs:
   style_check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: "Install clang-format"
-        run: sudo apt update && sudo apt install clang-format
-      - name: "Run clang-format for style check"
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: |
+          sudo apt update
+          sudo apt install clang-format
+
+      - name: Run clang-format for Style Check
         run: clang-format src/*.cpp src/*.hpp tests/*.cpp --dry-run -Werror
+
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: "Install Dependencies"
-        run: sudo apt update && sudo apt-get install cmake libeigen3-dev libyaml-cpp-dev  libboost-test-dev
-      - name: "Run CMake"
-        run: mkdir build && cd build && cmake ..
-      - name: "Make"
-        run: cd build && make
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt-get install -y \
+            cmake \
+            libeigen3-dev \
+            libyaml-cpp-dev \
+            libboost-test-dev
+
+      - name: Configure CMake
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+
+      - name: Build Project
+        run: |
+          cd build
+          make
 
   test:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/checkout@v4
-      - name: "Install dependencies"
-        run: sudo apt update && sudo apt-get install cmake libeigen3-dev libyaml-cpp-dev  libboost-test-dev
-      - name: "Run CMake"
-        run: mkdir build && cd build && cmake ..
-      - name: "Make"
-        run: cd build && make
-      - name: "Test"
-        run: cd build && make test
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt-get install -y \
+            cmake \
+            libeigen3-dev \
+            libyaml-cpp-dev \
+            libboost-test-dev
+
+      - name: Configure CMake
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+
+      - name: Build Project
+        run: |
+          cd build
+          make
+
+      - name: Run Tests
+        run: |
+          cd build
+          make test
