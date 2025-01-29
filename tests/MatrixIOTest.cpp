@@ -3,28 +3,18 @@
 #include "matrixIO.hpp"
 using namespace Eigen;
 
-struct MatrixIOFixture {
-  MatrixIOFixture()
-  {
-    m = MatrixXd(4, 4);
-    m << 1, 2, 3,
-        5, 6, 7,
-        10, 11, 12;
-  }
-
-  MatrixXd m;
-};
-
-BOOST_FIXTURE_TEST_SUITE(MatrixIOTests, MatrixIOFixture)
-
-BOOST_AUTO_TEST_CASE(openDataTest)
+BOOST_AUTO_TEST_CASE(ReadMatrix3x3)
 {
-  matrixIO::saveData("../data/temp.csv", m);
+  MatrixXd expectedX(3, 3);
+  expectedX << 0.680375, 0.59688, -0.329554,
+      -0.211234, 0.823295, 0.536459,
+      0.566198, -0.604897, -0.444451;
 
-  MatrixXd output = matrixIO::openData("../data/temp.csv", 3);
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; j++) {
-      BOOST_TEST(m(i, j) == output(i, j));
+  auto output = matrixIO::openData("../data/m3.csv", 3);
+
+  for (size_t x = 0; x < 3; ++x) {
+    for (size_t y = 0; y < 3; ++y) {
+      BOOST_CHECK(expectedX(x, y) == output(x, y));
     }
   }
 }
