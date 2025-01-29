@@ -3,7 +3,9 @@
 #include "matrixIO.hpp"
 using namespace Eigen;
 
-BOOST_AUTO_TEST_CASE(ReadMatrix3x3)
+BOOST_AUTO_TEST_SUITE(MatrixIoTests)
+
+BOOST_AUTO_TEST_CASE(ReadTest)
 {
   MatrixXd expectedX(3, 3);
   expectedX << 0.680375, 0.59688, -0.329554,
