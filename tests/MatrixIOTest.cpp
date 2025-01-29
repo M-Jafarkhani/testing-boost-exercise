@@ -12,9 +12,9 @@ BOOST_AUTO_TEST_CASE(ReadMatrix3x3)
 
   auto output = matrixIO::openData("../data/m3.csv", 3);
 
-  for (size_t x = 0; x < 3; ++x) {
-    for (size_t y = 0; y < 3; ++y) {
-      BOOST_CHECK(expectedX(x, y) == output(x, y));
+  for (int x = 0; x < 3; ++x) {
+    for (int y = 0; y < 3; ++y) {
+      BOOST_TEST(expectedX(x, y) == output(x, y));
     }
   }
 }
