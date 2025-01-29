@@ -6,13 +6,13 @@ using namespace Eigen;
 struct MatrixIOFixture {
   MatrixIOFixture()
   {
-    test = MatrixXd(4, 4);
-    test << 1, 2, 3,
-            5, 6, 7,
-            10, 11, 12;
+    m = MatrixXd(4, 4);
+    m << 1, 2, 3,
+        5, 6, 7,
+        10, 11, 12;
   }
 
-  MatrixXd test;
+  MatrixXd m;
 };
 
 BOOST_FIXTURE_TEST_SUITE(MatrixIOTests, MatrixIOFixture)
@@ -22,8 +22,8 @@ BOOST_AUTO_TEST_CASE(openDataTest)
   matrixIO::saveData("../data/temp.csv", test);
 
   MatrixXd output = matrixIO::openData("../data/temp.csv", 3);
-  for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 4; j++) {
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
       BOOST_TEST(test(i, j) == output(i, j));
     }
   }
